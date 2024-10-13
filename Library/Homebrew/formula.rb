@@ -3126,7 +3126,9 @@ class Formula
   # or calling `do |staging| ... staging.retain!` in the block will skip
   # the deletion and retain the temporary directory's contents.
   def mktemp(prefix = name, opts = {}, &block)
-    Mktemp.new(prefix, opts).run(&block)
+    retain = opts[:retain] == true
+    retain_in_cache = opts[:retain_in_cache] == true
+    Mktemp.new(prefix, retain:, retain_in_cache:).run(&block)
   end
 
   # A version of `FileUtils.mkdir` that also changes to that folder in
